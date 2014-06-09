@@ -56,5 +56,30 @@ if (Ti.version < 1.8) {
       Window = require('ui/handheld/ApplicationWindow');
     }
   }
-  new Window().open();
+  
+  var tabGroup = Ti.UI.createTabGroup();
+  var homeWindow = new Window();
+  var SettingsWindow = require('ui/common/Settings');
+  var settingsWindow = new SettingsWindow();
+  
+  var tab1 = Ti.UI.createTab({
+  	title: 'Home',
+  	window: homeWindow
+  });
+  
+  tab1.addEventListener('focus',function(e){
+  	//Add event to the Global queue
+  	Ti.App.fireEvent('update_goal');
+  });
+  
+  var tab2 = Ti.UI.createTab({
+  	title: 'Settings',
+  	window: settingsWindow
+  });
+  
+  tabGroup.addTab(tab1);
+  tabGroup.addTab(tab2);
+  tabGroup.open();
+  
+  //new Window().open();
 })();

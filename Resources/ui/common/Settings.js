@@ -1,7 +1,8 @@
 function SettingsWindow() {
 	var self = Ti.UI.createWindow({
 		backgroundColor: '#FFFFFF',
-		modal: true,
+		modal: false,
+		// set true for Android, false for iOS
 		layout: 'horizontal'
 	});
 	

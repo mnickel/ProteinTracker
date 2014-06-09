@@ -83,18 +83,48 @@ function FirstView() {
 		// add a close listner to update whatever goal may have been set
 		// in the settings window
 		settingsWindow.addEventListener('close',function(e){
-			var goal = Ti.App.Properties.getInt('goal');
-			if( goal == null ) {
-				goal = 0;
-			}
-			goalLabel.text = 'Goal: ' + goal;
+			goalLabel.text = updateGoalField();
 		});
 		settingsWindow.open();
 	});
 	
 	totalView.add(settingsButton);
+	
+	// TODO refactor callback into into a function
+	Ti.App.addEventListener('update_goal', function(e){
+		goalLabel.text = updateGoalField();
+	});
 
+	var locationButton = Ti.UI.createButton({
+		left: 10,
+		title: 'Location'
+	});
+	
+	locationButton.addEventListener('click', function(e){
+		Ti.Geolocation.getCurrentPosition( function(e) {
+			if( !e.success ) {
+				alert(e.code);
+			}
+			
+			alert(e.coords.longitude + "," + e.coords.latitude);
+		});
+	});
+	
+	self.add(locationButton);
 	return self;
 }
+
+/*
+ * updateGoalField
+ * helper function to get the goal
+ */
+function updateGoalField() {
+	var goal = Ti.App.Properties.getInt('goal');
+	if( goal == null ) {
+		goal = 0;
+	}
+	return 'Goal: ' + goal;	
+}
+
 
 module.exports = FirstView;
