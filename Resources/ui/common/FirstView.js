@@ -26,7 +26,7 @@ function FirstView() {
 		left: 10, 
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
 		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-		width: 150,
+		width: 100,
 		color: '#000000'
 	});
 	
@@ -54,23 +54,45 @@ function FirstView() {
 		text: 'Total: ' + total,
 		left: 10
 	});
-	
 	totalView.add(totalLabel);
 	
+	var goal = Ti.App.Properties.getInt('goal');
+	if( goal == null ) {
+		goal = 0;
+	}
 	
-	//label using localization-ready strings from <app dir>/i18n/en/strings.xml
-//	var label = Ti.UI.createLabel({
-//		color:'#000000',
-//		text:String.format(L('welcome'),'Titanium'),
-//		height:'auto',
-//		width:'auto'
-//	});
-//	self.add(label);
-
-	//Add behavior for UI
-//	label.addEventListener('click', function(e) {
-//		alert(e.source.text);
-//	});
+	var goalLabel = Ti.UI.createLabel({
+		color: '#000000',
+		text: 'Goal: ' + goal,
+		left: 10
+	});
+	
+	
+	
+	totalView.add(goalLabel);
+	
+	var settingsButton = Ti.UI.createButton({
+		left: 10,
+		title: 'Settings'
+	});
+	
+	settingsButton.addEventListener('click',function(e) {
+		var SettingsWindow = require('ui/common/Settings');
+		var settingsWindow = new SettingsWindow();
+		
+		// add a close listner to update whatever goal may have been set
+		// in the settings window
+		settingsWindow.addEventListener('close',function(e){
+			var goal = Ti.App.Properties.getInt('goal');
+			if( goal == null ) {
+				goal = 0;
+			}
+			goalLabel.text = 'Goal: ' + goal;
+		});
+		settingsWindow.open();
+	});
+	
+	totalView.add(settingsButton);
 
 	return self;
 }

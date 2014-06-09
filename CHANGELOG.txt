@@ -1,1 +1,12 @@
-Place your change log text here.  This file will be incorporated with your app at package time.
+Creating a Basic UI
+o the first chapter in the pluralsite track on app development on Titanium.
+
+Multiscreen Apps and Platform API's
+o notes on iOS Specific navigation
+  - http://psight.me/1a5kxlB -- link doesn't work :(
+  
+
+Ti.App.Properties -- used to preserve small amounts of data for exchange throughout the app
+o several different types of accessors
+o getInt(), setInt()
+
